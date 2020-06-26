@@ -1,3 +1,4 @@
+#--------------------Using GoogleVis library
 library("googlevis")
 
 #Individdual tax codes 
@@ -24,3 +25,21 @@ chartid=i)
 #plot(doughnut)
 
 cat(doughnut$html$chart, file=paste0("PATHURL/code", i, ".html"))}
+
+
+
+#-----------------------------------------------Using Morris Charts
+
+library(rCharts)
+library(colorspace)
+pal <- choose_palette()
+colors_A <- pal(7)
+
+#Individdual tax codes 
+x <- c("value1", "value2")
+for (i in x) {
+test <- subset(tax, tax$CODE==i)
+hhh <- data.frame(label = test$AGENCY, value = test$RATE)
+p5 <- mPlot(x = "label", y = "value", colors= colors_A, data = hhh, type = "Donut")
+p5$save(paste0("PATHURL/code", i,".html"), standalone = TRUE)
+}
