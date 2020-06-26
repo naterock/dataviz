@@ -1,0 +1,27 @@
+Sub ChartMacro()
+Dim x, i As Integer
+Dim ChartName, ImageName, ImagePath As String
+Dim CellRange, Headers As Range
+Set Headers = Range("Sheet1!A1:I1")
+NumRows = Range("A2:I4", Range("A2:I4").End(xlDown)).Rows.Count
+i = 2
+For x = 1 To NumRows
+Set CellRange = Range("Sheet1!A" & i & ":I" & i)
+ChartName = "Chart " & x
+ActiveSheet.Shapes.AddChart.Select
+ActiveChart.ChartType = xlDoughnut
+ActiveChart.SetSourceData Source:=CellRange
+ImageName = Range("Sheet1!A" & i).Value
+ImagePath = "path\" & ImageName & ".jpg"
+ActiveChart.SeriesCollection(1).Select
+ActiveChart.SeriesCollection(1).ApplyDataLabels
+ActiveChart.SeriesCollection(1).XValues = "=Sheet1!$B$1:$I$1"
+ActiveChart.ChartArea.Select
+ActiveSheet.Shapes(ChartName).ScaleWidth 1.301041776, msoFalse, _
+msoScaleFromTopLeft
+ActiveSheet.Shapes(ChartName).ScaleHeight 1.16840296, msoFalse, _
+msoScaleFromTopLeft
+i = i + 1
+ActiveChart.Export (ImagePath)
+Next
+End Sub
