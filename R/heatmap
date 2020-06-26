@@ -1,0 +1,12 @@
+testCORR <- testCORR[order(testCORR$field1),]
+row.names(testCORR) <- testCORR$field1
+testCORR <- testCORR[,2:13]
+corr_matrix <- data.matrix(testCORR)
+heatmap <- heatmap(corr_matrix, Rowv=NA, Colv=NA, col = heat.colors(256), scale="column", margins=c(10,10))
+
+
+#With colorspace
+library("colorspace")
+pal <- choose_palette()
+colors_A <- pal(7)
+heatmap <- heatmap(corr_matrix, Rowv=NA, Colv=NA, col = colors_A, scale="column", margins=c(10,10))
